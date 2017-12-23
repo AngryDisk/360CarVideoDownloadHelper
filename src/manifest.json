@@ -1,0 +1,30 @@
+{
+	"name": "360CarVideo NameHelper",
+	"manifest_version": 2,
+	"version": "0.1",
+	"description": "help mr.zhang rename 360car video",
+	"icons": {
+		"40": "icon.png"
+	},
+	"author": "zhaogaz",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://wap.che.360.cn/*"
+			],
+			"js": [
+				"content_js.js"
+			],
+			"css": [
+				"content.css"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"content_security_policy": "script-src 'self'; default-src 'self'",
+	"options_page": "options.html",
+	"permissions": [
+		"downloads",
+		"storage"
+	]
+}
