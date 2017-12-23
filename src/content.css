@@ -1,3 +1,11 @@
 .checkBoxTags {
 	display:block;
 }
+#downloadDiv{
+	width:20%;
+	height:-webkit-fill-available;
+	z-index:9999;
+	position:absolute;
+	right:20px;
+	background-color:yellowgreen;
+}

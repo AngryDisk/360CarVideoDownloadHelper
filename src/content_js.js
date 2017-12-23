@@ -34,7 +34,7 @@ function divGenerater() {
 	// 区域div
 	var div = document.createElement("div");
 	div.id = "downloadDiv";
-	div.style.cssText = "width:20%;height:-webkit-fill-available;z-index:9999;position:absolute;right:20px;background-color:yellowgreen;";
+//	div.style.cssText = "width:20%;height:-webkit-fill-available;z-index:9999;position:absolute;right:20px;background-color:yellowgreen;";
 	// 下载按钮
 	var button = document.createElement("button");
 	button.innerHTML = "下载";
