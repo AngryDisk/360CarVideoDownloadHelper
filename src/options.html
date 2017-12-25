@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>360CarVideo NameHelper</title>
+<script src="jquery-3.2.1.min.js"></script>
 <script src="options.js"></script>
 </head>
 <body>
@@ -10,9 +11,12 @@
 	<table id="tags"></table>
 	<table hidden="">
 		<tbody>
-			<tr id="tag-template" hidden="">
+			<tr id="tag-template">
 				<td>
-					<input type="text" class="match-param" />
+					<input type="text" class="tagName" />
+				</td>
+				<td>
+					<input type="checkbox" class="isType" />Is Type
 				</td>
 				<td>
 					<button class="remove">Remove</button>
