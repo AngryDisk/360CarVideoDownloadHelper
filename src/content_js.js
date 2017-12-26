@@ -1,6 +1,13 @@
 //显示在页面上的js，要有几个下载的tag，然后还要有下载的按钮，再加一个备注
 
-
+/**
+ * 重构步骤
+ * 1.添加几个网址的筛选
+ * 2.使用jQuery重绘整个页面
+ * 3.注意使用BootStrap的样式整体使用（class）
+ * 4. 使用bs 的 panels 和 active button样式
+ * 5. 可能还需要找一个浮动的东西，我也不知道叫什么？
+ */
 
 /**
  * 获取下载链接
@@ -68,11 +75,11 @@ function divGenerater() {
 			input.id="input-"+index;
 			input.setAttribute("class","checkBoxTags");
 			input.setAttribute("type","checkbox");
-			input.setAttribute("value",item.match_param);
+			input.setAttribute("value",item.name);
 			checkboxDiv.appendChild(input);
 			var label = document.createElement("label");
 			label.setAttribute("for","input-"+index);
-			label.innerHTML=item.match_param;
+			label.innerHTML=item.name;
 			checkboxDiv.appendChild(label);
 		});});
 	
