@@ -1,11 +1,9 @@
-.checkBoxTags {
-	display:block;
-}
-#downloadDiv{
-	width:20%;
-	height:-webkit-fill-available;
-	z-index:9999;
-	position:absolute;
-	right:20px;
-	background-color:yellowgreen;
+#frameDiv {
+	z-index: 9999;
+	position: fixed;
+	width: 400px;
+	height: 800px;
+	right: 0px;
+	top: 0px;
+	/*background-color:#66FF66;*/
 }

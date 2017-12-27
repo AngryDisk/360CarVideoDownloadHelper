@@ -1,8 +1,8 @@
 {
-	"name": "360CarVideo NameHelper",
+	"name": "CarVideoRenameHelper",
 	"manifest_version": 2,
 	"version": "0.1",
-	"description": "help mr.zhang rename 360car video",
+	"description": "help mr.zhang rename and download car video",
 	"icons": {
 		"40": "icon.png"
 	},
@@ -16,9 +16,9 @@
 				"jquery-3.2.1.min.js","content_js.js"
 			],
 			"css": [
-				"content.css"
+				"bootstrap.css","content.css"
 			],
-			"run_at": "document_end"
+			"run_at": "document_start"
 		}
 	],
 	"content_security_policy": "script-src 'self'; default-src 'self'",

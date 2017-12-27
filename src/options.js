@@ -61,6 +61,6 @@ $(document).ready(function() {
 	});
 	loadTags();
 	$("#refresh").click(function() {
-		divGenerater();
+	  canvsGen();
 	})
 });
