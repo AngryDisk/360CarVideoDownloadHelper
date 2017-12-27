@@ -30,7 +30,12 @@ function genfileName(){
     fileName+=".mp4";
 	return fileName;
 }
-
+function canvsGen(){
+	var fDiv=$("<div></div>");
+	fDiv.attr("id","frameDiv");
+	fDiv.addclass("");
+	//写一个html 对以上内容进行测试。不然太麻烦了。
+}
 /**
  * 绘制右侧HTML
  */
@@ -90,6 +95,21 @@ function divGenerater() {
 	// div添加到body上
 	document.body.appendChild(div);
 }
+
+
+/**
+ * <div>
+ * 下载 button
+ * 备注 text
+ * 预览 文件名（日期 平台名 备注 选中的标签）
+ * 
+ * foo以下 包含进度条，可滚动
+ * type字段<p class="text-left">向左对齐文本</p>
+ * div 可被选中的button    /div
+ * foo以上
+ * 
+ * </div>
+ */
 
 /**
  * 下载函数

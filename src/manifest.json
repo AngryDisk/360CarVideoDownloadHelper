@@ -10,10 +10,10 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"https://wap.che.360.cn/*"
+				"https://wap.che.360.cn/*","http://v.xiaoyi.com/*","http://camera.leautolink.com/*","https://qsurl.goluk.cn/*","https://cdn.static.ddpai.com/*"
 			],
 			"js": [
-				"content_js.js"
+				"jquery-3.2.1.min.js","content_js.js"
 			],
 			"css": [
 				"content.css"
