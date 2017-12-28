@@ -1,9 +1,8 @@
-#frameDiv {
+#ifframe {
 	z-index: 9999;
 	position: fixed;
 	width: 400px;
 	height: 800px;
 	right: 0px;
 	top: 0px;
-	/*background-color:#66FF66;*/
 }
