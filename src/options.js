@@ -74,7 +74,7 @@ function storeTags() {
 	});
 
 	obj["tags"] = tags;
-	// console.log(obj);
+	console.log(obj);
 	chrome.storage.local.set(obj);
 }
 //拖动相关事件

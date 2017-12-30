@@ -4,28 +4,31 @@
 	"version": "0.1",
 	"description": "help mr.zhang rename and download car video",
 	"icons": {
-		"16":"icon.png",
+		"16": "icon.png",
 		"40": "icon.png",
-		"128":"icon.png"
+		"128": "icon.png"
 	},
 	"author": "zhaogaz",
-	"content_scripts": [
-		{
-			"matches": [
-				"https://wap.che.360.cn/*","http://v.xiaoyi.com/*","http://camera.leautolink.com/*","https://qsurl.goluk.cn/*","https://cdn.static.ddpai.com/*"
-			],
-			"js": [
-				"jquery-3.2.1.min.js","content_js.js"
-			],
-			"css": [
-				"bootstrap.css","content.css"
-			],
-			"run_at": "document_start"
-		}
-	],
+	"content_scripts": [{
+		"matches": [
+			"https://wap.che.360.cn/*", "http://v.xiaoyi.com/*", "http://camera.leautolink.com/*", "https://qsurl.goluk.cn/*", "https://cdn.static.ddpai.com/*"
+		],
+		"js": [
+			"jquery-3.2.1.min.js", "content_js.js"
+		],
+		"css": [
+			"bootstrap.css", "content.css"
+		],
+		"run_at": "document_start"
+	}],
 	"options_page": "options.html",
 	"permissions": [
 		"downloads",
-		"storage"
-	]
+		"storage",
+		"<all_urls>"
+	],
+	"background": {
+		"scripts": ["jquery-3.2.1.min.js", "bg.js"],
+		"persistent": false
+	}
 }
