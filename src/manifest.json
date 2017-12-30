@@ -4,7 +4,9 @@
 	"version": "0.1",
 	"description": "help mr.zhang rename and download car video",
 	"icons": {
-		"40": "icon.png"
+		"16":"icon.png",
+		"40": "icon.png",
+		"128":"icon.png"
 	},
 	"author": "zhaogaz",
 	"content_scripts": [
@@ -21,7 +23,6 @@
 			"run_at": "document_start"
 		}
 	],
-	"content_security_policy": "script-src 'self'; default-src 'self'",
 	"options_page": "options.html",
 	"permissions": [
 		"downloads",

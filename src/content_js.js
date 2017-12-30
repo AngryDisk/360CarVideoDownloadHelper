@@ -42,7 +42,8 @@ function canvsGen() {
     var dBtn = "<button id='downloadBtn' class='btn btn-lg btn-primary center-block'>DOWNLOAD</button>";
     dDiv.append(dBtn);
     // 备注表单id=remark
-    var rDiv = "<div class='from-group'><label for='remark'>remark</label><input type='text' id='remark' class='form-control'></div>"
+    // var rDiv = "<div class='from-group'><label for='remark'>remark</label><input type='text' id='remark' class='form-control'></div>"
+    var rDiv = "<div class='panel panel-default'><div class='panel-heading'><b>remark</b></div><div class='panel-body'><input type='text' id='remark' class='form-control'></div></div>"
     dDiv.append(rDiv);
     // 预览id=previewText
     var pDiv = "<div class='panel panel-default'><div class='panel-heading'><b>preview</b></div><div id='previewText' class='panel-body'></div></div>";
@@ -122,13 +123,13 @@ function canvsGen() {
 function genfileName() {
     var fileName = (new Date()).Format("yyyyMMdd");
  // $("#ifframe").contents().find("#remark") $("#remark")
-    fileName = fileName + " " + $("#ifframe").contents().find("#remark").val()+" "+whichTV();
+    fileName = fileName +" " + whichTV() + " " + $("#ifframe").contents().find("#remark").val();
     // 这里可能还会加上哪个网站，视频格式
  // $("#ifframe").contents().find("#frameDiv") $("#frameDiv")
     $("#ifframe").contents().find("#frameDiv").find(".active").each(function (index, ele) {
         fileName = fileName + " " + $(ele).text();
     });
-    fileName += ".mp4";
+    fileName += ".mp4";//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!get .xxx from downloadurl
  // $("#ifframe").contents().find("#previewText") $("#previewText")
     $("#ifframe").contents().find("#previewText").text(fileName);
     return fileName;
@@ -148,7 +149,8 @@ function whichTV(){
     return "极路客";
   case "cdn.static.ddpai.com":
     return "盯盯拍";
-    default:
+  default:
+    return "?";
 
   }
 

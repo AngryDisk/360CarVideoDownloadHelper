@@ -8,21 +8,47 @@
 <link type="text/css" href="content.css" rel="stylesheet" />
 <script src="content_js.js" charset="UTF-8"></script>
 
-
+<style type="text/css">
+.over{
+	border: 2px dashed #999;
+}
+.opacitys{
+	opacity: 0.4;
+}
+.tableDiv{
+	width:600px;
+}
+</style>
 <script src="options.js" charset="UTF-8"></script>
 </head>
 <body>
 	<button id="new">New Tag</button>
+	<button id="sync">Sync From Web</button>
 	<button id="refresh">Refresh</button>
-	<table id="tags"></table>
-	<table hidden="">
+	<div class="tableDiv">
+	<table id="tags" class="table table-bordered">
 		<tbody>
-			<tr id="tag-template">
+			<tr id="empty-tag"></tr>
+		</tbody>
+	</table>
+	</div>
+	<table hidden="" >
+		<tbody>
+			<tr id="tag-template" >
+				<td draggable="true" style="cursor: move">
+					Switch
+				</td>
+				<td>
+					<button class="moveU">&uarr;&uarr;&uarr;</button>
+				</td>
+				<td>
+					<button class="moveD">&darr;&darr;&darr;</button>
+				</td>
 				<td>
 					<input type="text" class="tagName" />
 				</td>
 				<td>
-					<input type="checkbox" class="isType" />Is Type
+					<label><input type="checkbox" class="isType" />Is Group Name</label>
 				</td>
 				<td>
 					<button class="remove">Remove</button>
