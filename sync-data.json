@@ -1,15 +1,1 @@
-{
-	"tags": [{
-		"name": "111",
-		"type": "true"
-	}, {
-		"name": "222",
-		"type": "false"
-	}, {
-		"name": "333",
-		"type": "false"
-	},{
-		"name": "444",
-		"type": "false"
-	}]
-}
+{"tags":[{"name":"111","type":"true"},{"name":"222","type":"false"},{"name":"333","type":"false"},{"name":"444","type":"false"}]}
