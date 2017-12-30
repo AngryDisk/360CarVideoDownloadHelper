@@ -52,6 +52,7 @@ function loadTags() {
 	chrome.storage.local.get("tags", function(data) {
 		// console.log(data);
 		if (JSON.stringify(data) != "{}") {
+
 			data["tags"].forEach(function(tag) {
 				new Tag(tag);
 			});
@@ -74,7 +75,7 @@ function storeTags() {
 	});
 
 	obj["tags"] = tags;
-	console.log(obj);
+	console.log(JSON.stringify(obj));
 	chrome.storage.local.set(obj);
 }
 //拖动相关事件
@@ -122,10 +123,44 @@ function dragf() {
 
 function getWebData() {
 	//返回值为json！！！！！！！！！！！！
+	// var returnData;
+	$.ajax({
+		url: "https://raw.githubusercontent.com/AngryDisk/360CarVideoDownloadHelper/dev/sync-data.json",
+		type: "get",
+		success: function(data, status) {
+			console.log(data);
+			storeTagsFromWeb(JSON.parse(data));
+		}
+	});
+	// return returnData;
 }
 
-function storeTagsFromWeb() {
-	var data = getWebData();
+function storeTagsFromWeb(data) {
+	// var data = getWebData();
+	console.log(data);
+	var obj = {};
+	var tags = [];
+	// console.log(data["tags"] );
+	data["tags"].forEach(function(ele, index) {
+		var newObj = {};
+		newObj.name = ele.name;
+		// if (ele.type == "true") {
+		// 	newObj.type = true;
+		// } else {
+		// 	newObj.type = false;
+		// }
+		newObj.type=ele.type;
+		// newObj.type = new Boolean(ele.type);
+		tags[index] = newObj;
+	});
+	obj["tags"] = tags;
+	chrome.storage.local.set(obj, function() {
+		//清空当前
+		$("#tags tbody").empty();
+		$("#tags").append("<tr id='empty-tag'></tr>");
+		//重载
+		loadTags();
+	});
 	//然后把数据同步到local！！！！！！！！！！！！！！！！！！
 }
 
@@ -143,8 +178,8 @@ $(document).ready(function() {
 
 	//sync from static web page！！！！！！！！！！！！！！！！
 	$("#sync").click(function() {
-		storeTagsFromWeb();
-		loadTags();
+		getWebData();
+
 	});
 	dragf();
 });
