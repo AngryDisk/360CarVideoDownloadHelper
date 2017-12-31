@@ -123,7 +123,7 @@ function dragf() {
 function getWebData() {
 	//ajax方式获取github上面的json配置
 	$.ajax({
-		url: "https://raw.githubusercontent.com/AngryDisk/360CarVideoDownloadHelper/dev/sync-data.json",
+		url: "https://raw.githubusercontent.com/AngryDisk/360CarVideoDownloadHelper/master/sync-data.json",
 		type: "get",
 		success: function(data, status) {
 			console.log(data);
