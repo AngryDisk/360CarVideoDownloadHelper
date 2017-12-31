@@ -35,9 +35,7 @@ function canvsGen() {
   // 主面板div
   var fDiv = $("<div></div>").attr("id", "frameDiv").addClass("panel-default");
   var dDiv = $("<div></div>").addClass("panel panel-body").appendTo(fDiv);
-  // 下载按钮id=downloadBtn
-  var dBtn = "<button id='downloadBtn' class='btn btn-lg btn-primary center-block'>DOWNLOAD</button>";
-  dDiv.append(dBtn);
+
   // 备注表单id=remark
   // var rDiv = "<div class='from-group'><label for='remark'>remark</label><input type='text' id='remark' class='form-control'></div>"
   var rDiv = "<div class='panel panel-default'><div class='panel-heading'><b>remark</b></div><div class='panel-body'><input type='text' id='remark' class='form-control'></div></div>"
@@ -45,7 +43,9 @@ function canvsGen() {
   // 预览id=previewText
   var pDiv = "<div class='panel panel-default'><div class='panel-heading'><b>preview</b></div><div id='previewText' class='panel-body'></div></div>";
   dDiv.append(pDiv);
-
+  // 下载按钮id=downloadBtn
+  var dBtn = "<button id='downloadBtn' class='btn btn-lg btn-primary center-block'>DOWNLOAD</button>";
+  dDiv.append(dBtn);
   /*
    * //
    * 测试数据{[{"name":"D","type":"true"},{"name":"变态","type":"false"},{"name":"G","type":"true"}]} //
@@ -94,7 +94,7 @@ function canvsGen() {
       });
       buttonDiv += "</div></div>";
     }
-    dDiv.append(buttonDiv);
+    dDiv.prepend(buttonDiv);
     // $("#ifframe").contents().find(".buttonV") $(".buttonV")
     $(dDiv).find(".buttonV").click(function(event) {
       if ($(event.delegateTarget).hasClass("active")) {
