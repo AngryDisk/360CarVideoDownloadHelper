@@ -1,13 +1,10 @@
-/**
- * 重构步骤 1.添加几个网址的筛选 2.使用jQuery重绘整个页面 3.注意使用BootStrap的样式整体使用（class） 4. 使用bs 的
- * panels 和 active button样式 5. 可能还需要找一个浮动的东西，我也不知道叫什么？
+/*
+ *1.如果直接把div等内容注入到页面中，会让页面与该代码的css互相影响，使用iframe进行隔离
+ *2.使用jquery 对整体页面进行了重构简化操作
+ * 3.chrome.runtime.onMessage.addListener 在content 域 失效 因为只能是content像background发送消息，而background向content发送消息只能使用tabs.onMessage
  */
-/**
- * css 出了些问题，http://blog.csdn.net/samt007/article/details/52769957
- * web_accessible_resources
- * https://stackoverflow.com/questions/12783217/how-to-really-isolate-stylesheets-in-the-google-chrome-extension
- * chrome extension css conflict
- */
+
+
 $(document).ready(function() {
   canvsGen();
   // 批量绑定 指定 class button 激活 active
@@ -24,6 +21,9 @@ $(document).ready(function() {
 
 });
 
+/**
+ *由于iframe 样式的引入问题，在代码中，增加了部分style样式
+ */
 function canvsGen() {
   // 构造iframe
   if ($("#ifframe") != 0) {
@@ -34,40 +34,29 @@ function canvsGen() {
 
   // 主面板div
   var fDiv = $("<div></div>").attr("id", "frameDiv").addClass("panel-default");
-  var dDiv = $("<div></div>").addClass("panel panel-body").appendTo(fDiv);
+  var dDiv = $("<div></div>").addClass("panel panel-body").css({
+    "padding": "6px",
+    "margin-bottom": "9px"
+  }).appendTo(fDiv);
 
   // 备注表单id=remark
-  // var rDiv = "<div class='from-group'><label for='remark'>remark</label><input type='text' id='remark' class='form-control'></div>"
-  var rDiv = "<div class='panel panel-default'><div class='panel-heading'><b>remark</b></div><div class='panel-body'><input type='text' id='remark' class='form-control'></div></div>"
+  // var rDiv = "<div class='panel panel-default'><div class='panel-heading'><b>remark</b></div><div class='panel-body'><input type='text' id='remark' class='form-control'></div></div>"
+  var rDiv = "<p><span class='label label-primary'>remark</span></p><div class='panel panel-default' style='margin-bottom: 9px'><div class='panel-body' style='padding: 6px'><input type='text' id='remark' class='form-control'></div></div>";
   dDiv.append(rDiv);
+
   // 预览id=previewText
-  var pDiv = "<div class='panel panel-default'><div class='panel-heading'><b>preview</b></div><div id='previewText' class='panel-body'></div></div>";
+  // var pDiv = "<div class='panel panel-default'><div class='panel-heading'><b>preview</b></div><div id='previewText' class='panel-body'></div></div>";
+  var pDiv = "<p><span class='label label-primary'>preview</span></p><div class='panel panel-default' style='margin-bottom: 9px'><div id='previewText' class='panel-body' style='padding: 6px'></div></div>";
   dDiv.append(pDiv);
+
   // 下载按钮id=downloadBtn
   var dBtn = "<button id='downloadBtn' class='btn btn-lg btn-primary center-block'>DOWNLOAD</button>";
   dDiv.append(dBtn);
-  /*
-   * //
-   * 测试数据{[{"name":"D","type":"true"},{"name":"变态","type":"false"},{"name":"G","type":"true"}]} //
-   * 特例1.只有分组，无内容2.只有内容，无分组3.按钮数量多于n行 // 正常数据 var nData =
-   * [{"name":"D","type":"true"},{"name":"变态","type":"false"},{"name":"D","type":"true"},{"name":"变态","type":"false"},{"name":"D","type":"true"},{"name":"变态","type":"false"}]; //
-   * 异常1 var unData1 =
-   * [{"name":"D","type":"true"},{"name":"变态","type":"true"},{"name":"G","type":"true"}];
-   * var unData2 =
-   * [{"name":"D","type":"false"},{"name":"变态","type":"false"},{"name":"G","type":"false"}];
-   * var unData3 =
-   * [{"name":"D","type":"true"},{"name":"大变态","type":"false"},{"name":"G","type":"false"}
-   * ,{"name":"大变态","type":"false"},{"name":"大变态","type":"false"},{"name":"大变态","type":"false"}
-   * ,{"name":"大变态","type":"false"},{"name":"大变态","type":"false"},{"name":"大变态","type":"false"}
-   * ,{"name":"大变态","type":"false"},{"name":"大变态","type":"false"},{"name":"大变态","type":"false"}
-   * ,{"name":"大变态","type":"false"},{"name":"大变态","type":"false"},{"name":"大变态","type":"false"}
-   * ,{"name":"大变态","type":"false"},{"name":"大变态","type":"false"},{"name":"大变态","type":"false"} ];
-   */
-  // var data = nData;
 
   // 绘制选择表单 .buttonV 中选择已激活的
   chrome.storage.local.get("tags", function(dataa) {
-    var defaultDiv = "<div class=' panel panel-default'><div class='panel-heading'><b>default</b></div><div class='panel-body'>";
+    // var defaultDiv = "<div class=' panel panel-default'><div class='panel-heading'><b>default</b></div><div class='panel-body'>";
+    var defaultDiv = "<p><span class='label label-primary'>default</span></p><div class=' panel panel-default' style='margin-bottom: 9px'><div class='panel-body' style='padding: 6px'>";
     var buttonDiv = "";
     // console.log(dataa);
     var data = dataa["tags"];
@@ -79,11 +68,11 @@ function canvsGen() {
           if (index != 0) {
             buttonDiv += "</div></div>";
           }
-          buttonDiv += "<div class=' panel panel-default'><div class='panel-heading'><b>";
+          buttonDiv += "<p><span class='label label-primary'>";
           buttonDiv += ele.name;
-          buttonDiv += "</b></div><div class='panel-body'>";
+          buttonDiv += "</span></p><div class=' panel panel-default' style='margin-bottom: 9px'><div class='panel-body' style='padding: 6px'>";
         } else {
-          // 按钮 要加 buttonVclass
+          // 按钮 要加 buttonV class
           if (index == 0) {
             buttonDiv += defaultDiv;
           }
@@ -108,6 +97,7 @@ function canvsGen() {
 
   if (document.location.toString().substring(0, 6) != "chrome") {
     $("#ifframe").contents().find("head").append("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>");
+    // $("#ifframe").contents().find("head").append("<link rel='stylesheet' href='bootstrap.css'>");
   } else {
     $("#ifframe").contents().find("head").append("<link rel='stylesheet' href='bootstrap.css'>");
   }
@@ -149,8 +139,6 @@ function whichTV() {
   }
 }
 
-
-
 /**
  * 获取下载链接
  */
@@ -158,11 +146,11 @@ function realDownloadUrl() {
 
   var hostValue = window.location.host;
   switch (hostValue) {
-    case "wap.che.360.cn": //能用
+    case "wap.che.360.cn":
       var configs = document.getElementsByName('flashvars')[0].getAttribute(
         'value').replace(/\'/g, "\"").substring(7);
       var configsObj = JSON.parse(configs);
-      // console.log(configsObj.playlist[0].url).replace(/http/, "https");
+      // .replace(/http/, "https");
       return configsObj.playlist[0].url;
     case "v.xiaoyi.com":
       return $("#myVideo").attr("src");
@@ -171,137 +159,29 @@ function realDownloadUrl() {
       return $("#video_player").attr("src");
     case "qsurl.goluk.cn":
       return $("#wonvideo video").attr("src");
-    case "cdn.static.ddpai.com": //能用
+    case "cdn.static.ddpai.com":
       return $("video").attr("src");
     default:
 
   }
 }
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    // getBlob(request.url).then(blob => {
-    //  saveAs(blob, request.filename);
-    // });
-    var obj = {};
-    obj["url"] = realDownloadUrl();
-    obj["filename"] = genfileName();
-    sendResponse(obj);
-    // getBlob2(request.url);
-  });
-
 /**
- * 下载函数
+ * 调用background 中的下载代码，因为content域的ajax请求有https限制，也有跨域限制,而background没有这样的限制
  */
 function downloadEvent() {
-  // var fileName = genfileName();
-  // 使用blob来获得下载链接，才能避开 【chrome 非同域名不生效问题】，异步调用
-  // getBlob(realDownloadUrl()).then(blob => {
-  //   saveAs(blob, fileName);
-  //   $("#ifframe").contents().find("#downloadBtn").removeAttr("disabled");
-  // });
-
-  // var hostValue = window.location.host;
-  // switch (hostValue) {
-  //   case "wap.che.360.cn":
-  //   case "cdn.static.ddpai.com":
-
-  //     getBlob(realDownloadUrl()).then(blob => {
-  //       saveAs(blob, fileName);
-  //       $("#ifframe").contents().find("#downloadBtn").removeAttr("disabled");
-  //     });
-
-  //     break;
-
-  //   case "v.xiaoyi.com":
-  //   case "qsurl.goluk.cn":
-  //   case "camera.leautolink.com":
   //发送到后台
   var obj = {};
   obj["url"] = realDownloadUrl();
   obj["filename"] = genfileName();
   var port = chrome.runtime.connect(); //建立连接
-  port.postMessage(obj);
-  // port.onMessage.addListener(function(){
-
-  // });
+  port.postMessage(obj); //发送下载数据
+  //监听关闭，来恢复按钮禁用
   port.onDisconnect.addListener(function() {
     // console.log("111");
     $("#ifframe").contents().find("#downloadBtn").removeAttr("disabled");
   });
 
-  // ,function(response){
-  //   console.log(response);
-  //   if (response.finish) {
-  //     $("#ifframe").contents().find("#downloadBtn").removeAttr("disabled");
-  //   }
-  // }
-  // saveAs2(realDownloadUrl(), genfileName());
-  //   break;
-
-  // default:
-
-  // }
-}
-
-/**
- * 保存并重命名
- */
-function saveAs2(url, filename) {
-  /*
-   * 伪造一个a标签，使用blob方式生成href，并对文件进行重命名，然后点击下载
-   */
-  var downloada = document.createElement("a");
-  downloada.href = url;
-  // downloada.href=realDownloadUrl();
-  downloada.download = filename; // 文件名
-  downloada.style.cssText = "display:none";
-  // 不加append 和remove 好像会导致zepto报错
-  document.body.appendChild(downloada);
-  downloada.click();
-  document.body.removeChild(downloada);
-  // 释放
-  // window.URL.revokeObjectURL(downloada.href);
-}
-/**
- * 保存并重命名
- */
-function saveAs(blob, filename) {
-  /*
-   * 伪造一个a标签，使用blob方式生成href，并对文件进行重命名，然后点击下载
-   */
-  var downloada = document.createElement("a");
-  downloada.href = window.URL.createObjectURL(blob);
-  // downloada.href=realDownloadUrl();
-  downloada.download = filename; // 文件名
-  downloada.style.cssText = "display:none";
-  // 不加append 和remove 好像会导致zepto报错
-  document.body.appendChild(downloada);
-  downloada.click();
-  document.body.removeChild(downloada);
-  // 释放
-  window.URL.revokeObjectURL(downloada.href);
-}
-
-/**
- * 获取 blob 异步方式
- * 
- * @param {String}
- *          url 目标文件地址
- * @return {Promise}
- */
-function getBlob(url) {
-  return new Promise(resolve => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'blob';
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        resolve(xhr.response);
-      }
-    };
-    xhr.send();
-  });
 }
 
 // 格式化日期
@@ -330,4 +210,4 @@ Date.prototype.Format = function(fmt) {
     }
   }
   return fmt;
-}
+};

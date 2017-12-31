@@ -1,37 +1,21 @@
+/*JQuery ajax 对 blob 支持不好，弃用
+ *可以通过接管 chrome.downloads.onDeterminingFilename 来监听下载内容，而文件名的交互需要使用chrome.tabs.sendMessage从前台页面获取（未测试）
+ */
+
+/*
+ *使用chrome.runtime.onMessage方式，必须马上返回response
+ * connect方式可以通过 port.disconnect 方式通知 content恢复按钮禁用
+ */
 chrome.runtime.onConnect.addListener(function(port) {
-	// sendResponse({finish:false});
-	// port.onMessage.addListener(function(obj){
 	port.onMessage.addListener(function(msg) {
 		console.log(msg);
 		getBlob(msg.url).then(blob => {
 			saveAs(blob, msg.filename);
-			// sendResponse({finish:true});
 			port.disconnect();
 		});
-		console.log(port);
-
-		// });
-
+		// console.log(port);
 	});
-
-
-
-	// sendResponse({111:"222"});
-	// getBlob2(request.url);
 });
-
-// function getBlob2(urll) {
-// 	$.ajax({
-// 		url: urll,
-// 		type: "get",
-// 		dataType: "JSONP",
-// 		success: function(data) {
-// 			console.log(data);
-// 		}
-// 	});
-// }
-
-
 
 /**
  * 保存并重命名
@@ -74,12 +58,3 @@ function getBlob(url) {
 		xhr.send();
 	});
 }
-// chrome.downloads.onDeterminingFilename.addListener(function(downloadItem, suggest) {
-// 	var obj={};
-// 	chrome.runtime.sendMessage(obj, function(response) {
-// 		suggest({filename:response.filename});
-// 	});
-// 	// if (downloadItem.url) {}
-// 	console.log(downloadItem);
-// 	console.log(suggest);
-// });

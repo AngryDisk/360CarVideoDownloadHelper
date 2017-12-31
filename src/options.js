@@ -1,8 +1,3 @@
-/**
- * 数据格式
- * {[{"name":"111","type":"true"},{"name":"222","type":"false"},{"name":"333","type":"true"}]}
- */
-
 var nextId = 0;
 
 function Tag(data) {
@@ -41,6 +36,7 @@ function Tag(data) {
 	});
 	moveDisable();
 }
+
 //move button disable
 function moveDisable() {
 	$("[disabled]").removeAttr("disabled");
@@ -56,6 +52,7 @@ function loadTags() {
 			data["tags"].forEach(function(tag) {
 				new Tag(tag);
 			});
+
 		}
 	});
 }
@@ -78,6 +75,7 @@ function storeTags() {
 	console.log(JSON.stringify(obj));
 	chrome.storage.local.set(obj);
 }
+
 //拖动相关事件
 function dragf() {
 	var $dragObj = null;
@@ -117,13 +115,13 @@ function dragf() {
 		$("[draggable]").parent().removeClass("over");
 		$("[draggable]").parent().removeClass("opacitys");
 		storeTags();
+		moveDisable();
 	});
 
 }
 
 function getWebData() {
-	//返回值为json！！！！！！！！！！！！
-	// var returnData;
+	//ajax方式获取github上面的json配置
 	$.ajax({
 		url: "https://raw.githubusercontent.com/AngryDisk/360CarVideoDownloadHelper/dev/sync-data.json",
 		type: "get",
@@ -132,25 +130,19 @@ function getWebData() {
 			storeTagsFromWeb(JSON.parse(data));
 		}
 	});
-	// return returnData;
+
 }
 
 function storeTagsFromWeb(data) {
-	// var data = getWebData();
-	console.log(data);
+
+	// console.log(data);
 	var obj = {};
 	var tags = [];
 	// console.log(data["tags"] );
 	data["tags"].forEach(function(ele, index) {
 		var newObj = {};
 		newObj.name = ele.name;
-		// if (ele.type == "true") {
-		// 	newObj.type = true;
-		// } else {
-		// 	newObj.type = false;
-		// }
 		newObj.type=ele.type;
-		// newObj.type = new Boolean(ele.type);
 		tags[index] = newObj;
 	});
 	obj["tags"] = tags;
@@ -161,7 +153,7 @@ function storeTagsFromWeb(data) {
 		//重载
 		loadTags();
 	});
-	//然后把数据同步到local！！！！！！！！！！！！！！！！！！
+
 }
 
 $(document).ready(function() {
@@ -176,10 +168,10 @@ $(document).ready(function() {
 		canvsGen();
 	});
 
-	//sync from static web page！！！！！！！！！！！！！！！！
 	$("#sync").click(function() {
 		getWebData();
 
 	});
+
 	dragf();
 });
